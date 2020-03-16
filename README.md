@@ -361,3 +361,44 @@ HerkuleX의 RAM과 EEP Register Map의 내용은 터미널 창에서 rostopic ec
 
 ![8](https://user-images.githubusercontent.com/58063370/76718450-2f922780-677a-11ea-8a11-c43926ff1ea6.png)
 
+
+
+===[HerkuleX ROS Package를 활용한 응용 예시(Exmaple...]=================================
+
+ HerkuleX ROS패키지에는 2개의 HerkuleX를 이용한 Pan/Tilt의 예제와 6개의 HerkuleX를 이용한 6DOF_Arm의 예제가 포함되어 있습니다. HerkuleX_description 패키지에는 HerkuleX의 외형과 장착되는 부품들의 STL파일, 해당 부품들을 이용한 Pan/Tilt와 6DOF Arm의 URDF파일이 포함되어 있습니다. 해당 URDF를 이용하여 RVIZ화면에 HerkuleX를 출력해주기 위한 Launch파일도 같이 포함되어 있습니다.
+ 
+※	해당 패키지들을 사용하기 위해서는 패키지들에서 요청하는 의존성 패키지들을 모두 설치해야 합니다.
+
+1)	HerkuleX 2개와 Webcam을 이용한 Pan/Tilt 예제
+
+-	HerkuleX PanTilt_node.cpp에 2개의 HerkuleX를 이용한 Pan/Tilt의 기본적인 동작을 위한 코드가 구현되어 있습니다.
+
+-	‘HerkuleX_Pantilt_facetracking.launch’는 공개 패키지인 ‘usb_cam’과 ‘simple_face_detection’를 활용하였으며, 해당 내용은 launch파일에 정의되어 있습니다.
+
+![9](https://user-images.githubusercontent.com/58063370/76718794-32414c80-677b-11ea-8b2b-a79e0a59701b.png)
+
+-	‘HerkuleX_pantilt_Manual_control.launch’는 joint_state_publisher GUI를 이용하여, Pan과 Tilt를 수동으로 조작할 수 있는 예제입니다. 
+
+![10](https://user-images.githubusercontent.com/58063370/76718812-3ec5a500-677b-11ea-82fc-42faf551665f.png)
+
+2)	 HerkuleX 6개(그리퍼 제외)와 HerkuleX전용 브라켓을 이용한 6DOF Arm 예제.
+
+-	해당 예제는 ROS에서 제공하는 Moveit을 활용한 예제로서 HerkuleX_6DOF_Arm_node.cpp에 6개의 HerkuleX를 동작하기 위한 코드가 구현되어 있으며, Moveit Setup Assistant를 이용하여 생성한 moveit_HerkuleX_Arm패키지를 이용하여 동작을 할 수 있습니다
+
+※	Moveit Setup Assistant에 대해서는 아래 링크를 참고해 주세요.
+
+ http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/setup_assistant/setup_assistant_tutorial.html
+
+-	6DOF Arm의 동작을 위해서는 아래그림과 같이 2개의 launch파일을 실행해 주어야 합니다.
+
+![11](https://user-images.githubusercontent.com/58063370/76718844-5a30b000-677b-11ea-8676-e57921d19748.png)
+
+-	위의 그림과 같이 2개의 launch를 실행하면, 아래그림과 같이 RVIZ화면에 6DOF Arm의 화면이 출력됩니다.
+
+![12](https://user-images.githubusercontent.com/58063370/76718850-5d2ba080-677b-11ea-8bea-14545ce780dc.png)
+
+-	Arm의 끝 단에 위치한 작용점 부분을 원하는 위치로 이동 시킨 후 Planning 탭에 있는 Plan and Execute버튼을 클릭하면, Arm이 움직이는 경로에 대한 시뮬레이션과 함께, 실제 Arm이 동작합니다.
+
+-	Topic의 구성은 아래그림과 같습니다.
+
+![13](https://user-images.githubusercontent.com/58063370/76718853-5f8dfa80-677b-11ea-95c5-7a7191edb169.png)
