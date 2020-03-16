@@ -4,6 +4,13 @@
 	- HerkuleX (HerkuleX_node, HerkuleX_PanTilt_node, HerkuleX_6DOF_Arm_node, HerkuleX_feedback_Test_node, HerkuleX_12DOF_Robot_node(X))
 	- HerkuleX_description (HerkuleX_Arm_Control_moveit.launch, HerkuleX_Arm_display.launch, HerkuleX_Arm_Manual_Control.launch, HerkuleX_pantilt_Control.launch, HerkuleX_pantilt_display.launch)
 
+* HerkuleX dependency package
+- rosserial
+- joint_state_publisher
+- ros_controllers
+- object_msgs
+- PanTilt+Vision using the package: vision_opencv, usb-cam-develop, simple_face_detection, 
+
 ===[Device Setting]====================================
 
 -	HerkuleX와 PC간의 통신 연결을 위한 시리얼 인터페이스 장치와 전원공급 장치를 준비하여 아래 그림과 같이 연결합니다.
