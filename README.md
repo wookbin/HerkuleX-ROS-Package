@@ -261,10 +261,103 @@ HerkuleX ROS Package는 ‘rosserial’ Package를 이용하여, PC와 HerkuleX�
 
 ===[ROS GUI개발도구(rqt)를 활용한 HerkuleX제어]====================================
 
+rqt는 ROS환경에서 사용 가능한 QT기반 프레임워크입니다. ROS사용자는 rqt_service_caller 이용하여, HerkuleX의 구동 및 RAM & EEP Register의 값을 손쉽게 확인할 수 있으며, rqt_grapth를 이용하여, 실행되는 Node와 Node간의 토픽(Topic)정보를 한눈에 확인할 수 있습니다. 또한 rqt_ploat을 활용하여, HerkuleX의 데이터를 그래프로 표시할 수도 있습니다. (단, 사용자PC의 ROS환경에는 rqt package가 설치되어 있어야 합니다.)
+
+1)	rqt_service_caller를 활용한 HerkuleX의 위치/속도 제어 및 Register 핸들링.
+rqt_service_caller을 이용하기 위해서는 아래 그림과 같이 터미널 창에서 rqt_service_caller를 실행해 주어야 합니다.
+
+![1](https://user-images.githubusercontent.com/58063370/76718184-44ba8680-6779-11ea-844d-3893ca84669e.png)
+
+	명령어 입력:  $ rosrun rqt_service_caller rqt_service_caller
+
+ rqt_service_caller가 실행되면 아래 그림과 같은 GUI환경이 출력되며, 해당 화면에서는 위치제어 명령, 속도제어 명령, 레지스터 제어 명령을 선택하여 각각의 서비스를 호출할 수가 있습니다.
+
+<img width="466" alt="2" src="https://user-images.githubusercontent.com/58063370/76718213-5865ed00-6779-11ea-8e32-03fe7a2928a5.png">
+
+-	Position_cmd 서비스 설명
+
+해당 기능에서는 HerkuleX에서 제공하는 JOG(S_JOG와 I_JOG)명령어를 이용하여 HerkuleX를 사용자가 원하는 위치, 원하는 동작시간으로 동작시킬 수가 있고, LED의 색상을 선택하여 On/Off가 가능합니다. 해당 서비스의 Input인자로는 HerkuleX의 ID와 LED의 색상, 동작시간, 목표위치, JOG명령의 선택이 가능합니다.
+
+![3](https://user-images.githubusercontent.com/58063370/76718244-74698e80-6779-11ea-8aa7-29a41183a9c9.png)
+
+	위의 그림과 같이 Input인자의 값을 넣고 ‘Call’버튼을 클릭하면 서비스가 호출되며, 정상적으로 서비스가 전달되면, 하단에 있는 응답 창으로 전달한 Command의 정보와 호출에 대한 리턴 값 정보가 업데이트 됩니다.
+
+	해당 예시 설명:  ID 1번 HerkuleX에 녹색 LED를 On시키고, 672(11.2 * 60)ms의 속도로 0도 위치(512)로 이동.
 
 
+-	Velocity_cmd 서비스 설명.
+
+해당 기능에서는 HerkuleX에서 제공하는 JOG(S_JOG와 I_JOG)명령어를 이용하여 HerkuleX를 사용자가 원하는 속도로 동작시킬 수가 있고, LED의 색상을 선택하여 On/Off가 가능합니다.
+해당 서비스의 Input인자로는 HerkuleX의 ID와 LED의 색상, 목표속도, JOG명령의 선택이 가능합니다.
+
+![4](https://user-images.githubusercontent.com/58063370/76718322-be527480-6779-11ea-9dbd-46b2f2a974e2.png)
+
+	위의 그림과 같이 Input인자의 값을 넣고 ‘Call’버튼을 클릭하면 서비스가 호출되며, 정상적으로 서비스가 전달되면, 하단에 있는 응답 창으로 전달한 Command의 정보와 호출에 대한 리턴 값 정보가 업데이트 됩니다.
+
+	해당 예시 설명: ID 1번 HerkuleX에 청색 LED를 On시키고, 100(범위: 0~1024)의 속도로 무한회전.
+
+-	Register_cmd 서비스 설명.
+
+해당 기능에서는 HerkuleX의 RAM과 EEP Register의 값을 사용자가 직접 Read/Write가 가능합니다. 해당 서비스의 Input인자로는 서비스 명령어 문자열(String), HerkuleX ID, Register주소번지, 데이터의 입력으로 호출이 가능합니다.
+
+![5](https://user-images.githubusercontent.com/58063370/76718330-c6121900-6779-11ea-90cd-bd9bd995734e.png)
+
+	위의 그림과 같이 Command의 문자열에 ‘RAM_RegisterData_Read’를 입력하고 HerkuleX ID1번에 Register주소 0번(ID), 데이터 0을 입력하면, HerkuleX ID1번의 ID값이 RAM_MAP topic에 업데이트되며, 하단에 있는 응답 창으로 전달한 Command의 호출에 대한 리턴 값 정보가 업데이트 됩니다.
+
+	터미널 창에서 rostopic 의 정보를 확인하면, ID에 대한 메시지가 ‘1’로 업데이트 되어있음을 확인할 수 있습니다.
+
+	해당 서비스의 입력 가능한 명령어 문자열은 총 10가지가 정의되어 있으며, 그 내용은 다음과 같습니다.
+
+①	RAM_RegisterData_Read_All: RAM Register의 모든 값을 읽어 들이는 명령이며, Input인자로는 HerkuleX의 ID값만 선택하고 나머지 인자(Addr, Value)는 모두 0을 입력.
+
+②	EEP_RegisterData_Read_All: EEP Register의 모든 값을 읽어 들이는 명령이며, Input인자로는 HerkuleX의 ID값만 선택하고 나머지 인자(Addr, Value)는 모두 0을 입력
+
+③	RAM_RegisterData_Read: RAM Register의 특정 주소의 값을 읽어 들이는 명령이며, Input인자로 HerkuleX의 ID와 RAM주소번지를 선택하고, Data는 0을 입력.
+
+④	EEP_RegisterData_Read: EEP Register의 특정 주소의 값을 읽어 들이는 명령이며, Input인자로 HerkuleX의 ID와 EEP주소번지를 선택하고, Data는 0을 입력.
+
+⑤	RAM_RegisterData_Write: RAM Register의 특정 주소에 데이터를 쓰는 명령이며, Input인자로 HerkuleX의 ID와 RAM주소번지, 원하는 데이터를 입력. (단, 주소번지 별 데이터의 크기와 범위는 HerkuleX 데이터시트를 참고.)
+
+⑥	EEP_RegisterData_Write: EEP Register의 특정 주소에 데이터를 쓰는 명령이며, Input인자로 HerkuleX의 ID와 EEP주소번지, 원하는 데이터를 입력. (단, 주소번지 별 데이터의 크기와 범위는 HerkuleX 데이터시트를 참고.)
+
+⑦	SERVO_ON: HerkuleX의 토크를 On시키는 명령이며, Input인자로 HerkuleX의 ID값만 선택하고 나머지 인자(Addr, Value)는 모두 0을 입력.
+
+⑧	SERVO_OFF: HerkuleX의 토크를 Off시키는 명령이며, Input인자로 HerkuleX의 ID값만 선택하고 나머지 인자(Addr, Value)는 모두 0을 입력.
+
+⑨	BRAKE_ON: HerkuleX의 브레이크를 On시키는 명령이며, Input인자로 HerkuleX의 ID값만 선택하고 나머지 인자(Addr, Value)는 모두 0을 입력.
+
+⑩	ERROR_CLEAR: HerkuleX에서 발생된 모든 Error를 초기화 시키는 명령이며, Input인자로 HerkuleX의 ID값만 선택하고 나머지 인자(Addr, Value)는 모두 0을 입력.
 
 
+-	IJOG_cmd 서비스 설명.
+
+해당 기능에서는 HerkuleX의 IJOG명령어를 이용하여, 여러 개의 HerkuleX에 속도 지정이 개별로 가능하며 동시에 위치제어를 할 수 있습니다. (최대 43개의 제어가능) 해당 서비스의 Input인자는 연결된 HerkuleX의 ID가 정의된 배열, LED에 색상에 대한 배열, 목표위치에 대한 배열, 동작시간에 대한 배열, 연결된 HerkuleX의 총 개수에 대한 데이터가 있다.
+
+![6](https://user-images.githubusercontent.com/58063370/76718354-dde99d00-6779-11ea-84c8-19fd3f09da73.png)
+
+	위의 그림과 같이 연결된 각각의 HerkuleX ID와 LED색상, 목표위치, 동작 시간을 배열로 입력하고, 연결된 HerkuleX의 총 개수를 입력한 후 서비스를 호출하면, 호출된 Command의 문자열과 호출의 결과가 리턴 된다.
 
 
+-	SJOG_cmd 서비스 설명.
+
+해당 기능에서는 HerkuleX의 SJOG명령어를 이용하여, 여러 개의 HerkuleX를 동시에 위치제어를 할 수 있습니다. (최대 53개의 제어가능)해당 서비스의 Input인자는 연결된 HerkuleX의 ID가 정의된 배열, LED에 색상에 대한 배열, 목표위치에 대한 배열, 동작시간, 연결된 HerkuleX의 총 개수에 대한 데이터가 있다.
+
+![7](https://user-images.githubusercontent.com/58063370/76718411-15f0e000-677a-11ea-829d-67506d83c7c4.png)
+
+
+2)	RAM_MAP topic과 EEP_MAP topic 내용을 한번에 확인하는 방법.
+
+HerkuleX의 RAM과 EEP Register Map의 내용은 터미널 창에서 rostopic echo명령을 이용하여 확인할 수 있습니다.
+
+①	RAM MAP의 정보를 확인하는 방법.
+
+	명령어 입력:  $ rostopic echo /Info_RAM_ID_1
+
+②	EEP MAP의 정보를 확인하는 방법.
+
+	명령어 입력:  $ rostopic echo /Info_EEP_ID_1
+
+위의 예시 명령어는 HerkuleX ID 1번에 대해서 정보를 확인하는 방법이며, ID가 다를 경우 명령어 끝에 있는 숫자를 해당 ID의 숫자로 수정하여 호출하시면 됩니다. 해당 명령어가 수행되면, 터미널 창에 출력되는 내용은 아래 그림과 같습니다.
+
+![8](https://user-images.githubusercontent.com/58063370/76718450-2f922780-677a-11ea-8a11-c43926ff1ea6.png)
 
