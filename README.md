@@ -206,6 +206,49 @@ ROS시스템에서는 실행하고자 하는 ROS Node를 구동하기 위해서�
 예) 14,0,0,0을 입력하면 해당 기능이 비활성화 된다.
 
 
+[HerkuleX ROS Package의 구성]
+HerkuleX ROS Package는 ‘rosserial’ Package를 이용하여, PC와 HerkuleX간의 Serial통신을 연결합니다. 때문에 종속성 패키지로 rosserial이 준비되어 있어야 합니다. 또한, HerkuleX Package는 Serail통신의 Board rate를 115,200bps로 고정하였기 때문에 PC에 연결된 HerkuleX의 Board rate또한 115,200bps로 설정되어 있어야 합니다. (HerkuleX Package의 Board rate의 변경을 위해서는 Package의 Code수정이 필요함)
+ HerkuleX ROS Package의 구성은 아래그림과 같습니다.
+
+![그림1](https://user-images.githubusercontent.com/58063370/76713977-c1dd0000-6767-11ea-994e-33a20eb90647.png)
+그림 11. HerkuleX ROS Package의 구성.
+
+1)	HerkuleX ROS Package의 실행을 위한 Launch file이 들어있는 폴더.
+2)	HerkuleX Package에서 Publish되는 Message가 정의되어 있는 폴더
+-	MsgHerkuleX_EEP.msg: EEP Register의 메시지 정보가 정의되어 있음.
+-	MsgHerkuleX_RAM.msg: RAM Register의 메시지 정보가 정의되어 있음.
+3)	HerkuleX Package의 C++ 소스코드 정보가 들어있는 폴더
+-	HerkuleX_node.cpp: 함수들의 정의에 대해서 작성된 소스파일
+-	HerkuleX_node.h 함수들의 선언과 사용되는 구조체들에 대해서 작성된 헤더파일
+4)	HerkuleX Package에서 사용되는 서비스 메시지 정보가 정의되어 있는 폴더
+-	HerkuleX_PositionMove.srv: HerkuleX의 위치제어 서비스에 대한 정의.
+	해당 파일에는 위치제어 명령에 사용되는 Input Data의 정의와 Output Data에 대한 정의가 정리되어 있음.
+![2](https://user-images.githubusercontent.com/58063370/76714050-462f8300-6768-11ea-8005-377ec9616d6a.JPG)
+그림 12. Position Move Command Service의 정의.
+
+-	HerkuleX_VelocityMove.srv: HerkuleX의 속도제어 서비스에 대한 정의.
+	해당 파일에는 속도제어 명령에 사용되는 Input Data의 정의와 Output Data에 대한 정의가 정리되어 있음.
+![3](https://user-images.githubusercontent.com/58063370/76714070-69f2c900-6768-11ea-8970-96c044e5e1f2.JPG)
+그림 13. Velocity Move Command Service의 정의.
+
+-	HerkuleX_RegisterCommand.srv: HerkuleX의 EEP & RAM Register에 해당 주소번지 별 데이터를 입력하여 Read/Write기능을 수행할 수 있는 서비스에 대한 정의.
+	 해당 파일에는 Register Control(Read/Write)에 사용되는 Input Data의 정의와 Output Data에 대한 정의가 정리되어 있음.
+![4](https://user-images.githubusercontent.com/58063370/76714088-868f0100-6768-11ea-87da-34aae16e31a7.JPG)
+그림 14. Register Command Service의 정의.
+
+-	IJOGcmd.srv: 해당 기능에서는 HerkuleX의 IJOG명령어를 이용하여, 여러 개의 HerkuleX에 속도 지정이 개별로 지정하여 동시에 위치제어가능.
+	(최대 43개의 제어가능) 해당 서비스의 Input인자는 연결된 HerkuleX의 ID가 정의된 배열, LED에 색상에 대한 배열, 목표위치에 대한 배열, 동작시간에 대한 배열, 연결된 HerkuleX의 총 개수에 대한 데이터가 있다.
+![5](https://user-images.githubusercontent.com/58063370/76714196-2056ae00-6769-11ea-8bc9-8a41f12d719e.JPG)
+그림 15. IJOG_cmd Service의 정의.
+
+-	JOGcmd.srv: 해당 기능에서는 HerkuleX의 IJOG명령어를 이용하여, 여러 개의 HerkuleX를 동시에 위치제어가능.
+	(최대 53개의 제어가능) 해당 서비스의 Input인자는 연결된 HerkuleX의 ID가 정의된 배열, LED에 색상에 대한 배열, 목표위치에 대한 배열, 동작시간, 연결된 HerkuleX의 총 개수에 대한 데이터가 있다.
+![6](https://user-images.githubusercontent.com/58063370/76714243-585df100-6769-11ea-8383-44ccaf3c2489.JPG)
+그림 16. SJOG_cmd Service의 정의.
+
+
+[ROS GUI개발도구(rqt)를 활용한 HerkuleX제어]
+
 
 
 
