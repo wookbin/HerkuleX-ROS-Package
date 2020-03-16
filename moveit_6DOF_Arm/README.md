@@ -13,6 +13,7 @@
 -	위의 그림과 같이 2개의 launch를 실행하면, 아래그림과 같이 RVIZ화면에 6DOF Arm의 화면이 출력됩니다.
 
 ![12](https://user-images.githubusercontent.com/58063370/76718850-5d2ba080-677b-11ea-8bea-14545ce780dc.png)
+![001](https://user-images.githubusercontent.com/58063370/76736393-1012f300-67aa-11ea-9ca5-0a8fb46224cf.png)
 
 -	Arm의 끝 단에 위치한 작용점 부분을 원하는 위치로 이동 시킨 후 Planning 탭에 있는 Plan and Execute버튼을 클릭하면, Arm이 움직이는 경로에 대한 시뮬레이션과 함께, 실제 Arm이 동작합니다.
 
