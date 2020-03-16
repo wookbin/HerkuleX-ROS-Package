@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name"     default="HerkuleX_PanTilt"/>
+  <arg name="open_rviz"      default="true" />
+  <arg name="use_gui"        default="true" />
+  <!-- Load the URDF/Xacro model of our robot -->
+  <arg name="urdf_file" default="$(find xacro)/xacro '--inorder' '$(find HerkuleX_description)/urdf/HerkuleX_PanTilt.xacro'" />
+
+    <param name="robot_description" command="$(arg urdf_file)" /> 
+  <!-- Send joint values -->
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+     <param name="/use_gui" value="$(arg use_gui)"/>
+  </node>
+
+  <!-- Combine joint values to TF-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+  <!-- Show in Rviz -->
+  <group if="$(arg open_rviz)">
+     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find HerkuleX_description)/rviz/HerkuleX.rviz"/>
+  </group>
+
+</launch>

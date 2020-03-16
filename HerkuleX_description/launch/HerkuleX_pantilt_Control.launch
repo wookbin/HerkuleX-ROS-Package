@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name"     default="HerkuleX_PanTilt"/>
+  <arg name="open_rviz"      default="true" />
+  <arg name="use_gui"        default="true" />
+  <!-- Load the URDF/Xacro model of our robot -->
+  <arg name="urdf_file" default="$(find xacro)/xacro '--inorder' '$(find HerkuleX_description)/urdf/HerkuleX_PanTilt.xacro'" />
+
+  <!-- Camera node -->
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video1" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="mjpeg" />
+    <param name="camera_frame_id" value="usb_cam" />
+    <param name="io_method" value="mmap"/>
+    <param name="flip_horizontal" value="false" />
+  </node>
+  <!-- Face tracking Node node -->
+  <node name="simple_face_detector" pkg="simple_face_detection" type="detector_cv3.py" output="screen">
+    <param name="cascade_classifier" value="$(find simple_face_detection)/config/haarcascade_frontalface_default.xml"/>
+    <param name="image_topic_input" value="/usb_cam/image_raw" />
+    <param name="image_topic_output" value="/face_detection/image_raw" />
+  </node>
+
+  <!-- HerkuleX Node -->
+  <node pkg="HerkuleX" type="HerkuleX_node" name="HerkuleX_node" args="2" output="screen"/>
+  <!-- args="2": Total Axis 2 (ID: 1, 2)-->
+  <node pkg="HerkuleX" type="HerkuleX_PanTilt_node" name="HerkuleX_PanTilt_node" args="2" output="screen"/>
+  <!-- args="1": Manual Mode || args="2": Auto Mode-->
+    <param name="robot_description" command="$(arg urdf_file)" /> 
+  <!-- Send joint values -->
+  <!--
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+     <param name="/use_gui" value="$(arg use_gui)"/>
+  </node> 
+  -->
+  
+  <node pkg="joint_state_controller" type="joint_state_controller" name="joint_state_controller"/>
+
+  <!-- Combine joint values to TF-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+  <!-- Show in Rviz -->
+  <group if="$(arg open_rviz)">
+     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find HerkuleX_description)/rviz/HerkuleX.rviz"/>
+  </group>
+
+</launch>

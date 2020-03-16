@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name"     default="HerkuleX_Arm"/>
+  <arg name="open_rviz"      default="true" />
+  <arg name="use_gui"        default="false" />
+  <!-- Load the URDF/Xacro model of our robot -->
+  <arg name="urdf_file" default="$(find xacro)/xacro '--inorder' '$(find HerkuleX_description)/urdf/HerkuleX_Arm.xacro'" />
+
+
+   <!-- HerkuleX Node -->
+  <node pkg="HerkuleX" type="HerkuleX_node" name="HerkuleX_node" args="7" output="screen"/>
+  <!-- args="7": Total Axis 7 (ID: 1, 2 ,3, 4, 5, 6, 7)-->
+  <node pkg="HerkuleX" type="HerkuleX_6DOF_Arm_node" name="HerkuleX_6DOF_Arm_node" args="1" output="screen"/>
+  <!-- args="1": Manual Mode || args="2": Auto Mode-->
+
+    <param name="robot_description" command="$(arg urdf_file)" /> 
+
+  <!-- Send joint values -->
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+     <param name="/use_gui" value="$(arg use_gui)"/>
+  </node>
+
+  <!-- Combine joint values to TF-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+
+</launch>

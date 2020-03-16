@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<!-- HerkuleX PanTilt Chain -->
+
+<robot name="HerkuleX" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find HerkuleX_description)/urdf/materials.xacro" />
+  <!-- PI -->
+  <xacro:property name="PI" value="3.1415926" />
+
+  <link name="base"/>
+  <joint name="fixed" type="fixed">
+    <parent link="base"/>
+    <child link="link1"/>
+     <origin xyz="0 0 0.00313" rpy="0 0 0"/>
+  </joint>
+
+  <link name="link1">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//DRS_0101.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+     	<material name="DarkGrey"/>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//DRS_0101.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      	<material name="DarkGrey"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="joint1" type="revolute">
+    <parent link="link1"/>
+    <child link="horn1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" lower="-2.617" upper="2.617" velocity="1.571"/>
+  </joint>
+
+  <link name="horn1">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//horn.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+     	<material name="Grey"/>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//horn.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      	<material name="Grey"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="fixed1" type="fixed">
+    <parent link="horn1"/>
+    <child link="DRB_0009"/>
+  </joint>
+
+  <link name="DRB_0009">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//DRB_0009.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+     	<material name="White"/>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//DRB_0009.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      	<material name="White"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="fixed2" type="fixed">
+    <parent link="DRB_0009"/>
+    <child link="horn2"/>
+  </joint>
+
+  <link name="horn2">
+    <collision>
+      <origin xyz="0 -0.016 0.0215" rpy="${PI/2} 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//horn.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+     	<material name="Grey"/>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.016 0.0215" rpy="${PI/2} 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//horn.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      	<material name="Grey"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="joint2" type="revolute">
+    <parent link="horn2"/>
+    <child link="link2"/>
+    <origin xyz="0 -0.016 0.0215 " rpy="${PI/2} ${PI/2} 0"/>
+    <axis xyz="0 0 -1"/>
+    <limit effort="30" lower="-1.5708" upper="1.5708" velocity="1.571"/>
+  </joint>
+  
+  <link name="link2">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//DRS_0101.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+     	<material name="DarkGrey"/>
+    </collision>
+    <visual>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://HerkuleX_description/meshes//DRS_0101.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      	<material name="DarkGrey"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+</robot>
+
+
+

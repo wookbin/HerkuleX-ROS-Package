@@ -1,0 +1,13 @@
+#This message is used to send command to Herkulex
+# Velocity Move Command
+
+int8 ID
+int8 LED
+int16 TargetVelocity
+int16 JogMode
+#int16 Profile
+#int16 Multi
+
+---
+string command 
+bool command_Result

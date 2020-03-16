@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+ <node pkg="HerkuleX" type="HerkuleX_node" name="HerkuleX_node" args="7" output="screen">
+ </node>
+ <node pkg="HerkuleX" type="HerkuleX_6DOF_Arm_node" name="HerkuleX_6DOF_Arm_node" args="1" output="screen">
+ <!-- args="1": Manual Mode || args="2": Auto Mode-->
+ </node>
+
+
+
+</launch>

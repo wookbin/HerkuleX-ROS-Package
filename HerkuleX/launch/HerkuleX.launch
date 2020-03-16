@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+<node pkg="HerkuleX" type="HerkuleX_node" name="HerkuleX_node" args="2" output="screen" />
+ <!-- args="2": Total Axis 2  -->
+
+</launch>

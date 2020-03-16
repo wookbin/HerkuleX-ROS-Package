@@ -1,0 +1,12 @@
+#This message is used to send command to Herkulex
+
+string command 
+#0:DRS-0101, 1:DRS-0102, 2:DRS-0201, 3:DRS-0301, 4:DRS-0302, 5:DRS-0303
+#6:DRS-0401, 7:DRS-0402, 8:DRS-0601, 9:DRS-0602 
+int8 Model_Num
+int8 ID
+int16 Addr
+int16 Value
+
+---
+bool command_Result

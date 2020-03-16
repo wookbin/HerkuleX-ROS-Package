@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: HerkuleX_description
+    relative_path: urdf/HerkuleX_Arm.xacro
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/HerkuleX.srdf
+  CONFIG:
+    author_name: wookbin Jin
+    author_email: zzang0736@gmail.com
+    generated_timestamp: 1584086472

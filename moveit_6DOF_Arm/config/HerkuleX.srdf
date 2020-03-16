@@ -1,0 +1,313 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="HerkuleX">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="arm">
+        <joint name="joint1" />
+        <joint name="joint2" />
+        <joint name="joint3" />
+        <joint name="joint4" />
+        <joint name="joint5" />
+        <joint name="joint6" />
+    </group>
+    <group name="gripper">
+        <joint name="joint7" />
+        <joint name="fixed16" />
+        <joint name="fixed18" />
+        <joint name="fixed17" />
+        <joint name="fixed20" />
+        <joint name="fixed19" />
+        <joint name="fixed21" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="Home_Pose" group="arm">
+        <joint name="joint1" value="0" />
+        <joint name="joint2" value="0" />
+        <joint name="joint3" value="0" />
+        <joint name="joint4" value="0" />
+        <joint name="joint5" value="0" />
+        <joint name="joint6" value="0" />
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="gripper_end" parent_link="horn7" group="gripper" />
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="base" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="DRB00041" link2="DRB00042" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="DRB00052" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="DRB00091" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="DRB00092" reason="Adjacent" />
+    <disable_collisions link1="DRB00041" link2="DRB00093" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="gripper-bottom" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="gripper-bottom-cover" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="gripper-left" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="gripper-link1" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="gripper-link1-1" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="gripper-link2" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="horn1" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="horn2" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="horn3" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="horn4" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="horn5" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="horn6" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="horn7" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="link2" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="link4" reason="Adjacent" />
+    <disable_collisions link1="DRB00041" link2="link5" reason="Never" />
+    <disable_collisions link1="DRB00041" link2="link6" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="DRB00052" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="DRB00091" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="DRB00092" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="DRB00093" reason="Adjacent" />
+    <disable_collisions link1="DRB00042" link2="gripper-bottom" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="gripper-bottom-cover" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="gripper-left" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="gripper-link1" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="gripper-link1-1" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="gripper-link2" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="horn2" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="horn3" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="horn4" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="horn5" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="horn6" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="horn7" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="link3" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="link4" reason="Never" />
+    <disable_collisions link1="DRB00042" link2="link6" reason="Adjacent" />
+    <disable_collisions link1="DRB00042" link2="link7" reason="Never" />
+    <disable_collisions link1="DRB00051" link2="DRB00091" reason="Never" />
+    <disable_collisions link1="DRB00051" link2="horn1" reason="Adjacent" />
+    <disable_collisions link1="DRB00051" link2="horn2" reason="Never" />
+    <disable_collisions link1="DRB00051" link2="horn3" reason="Never" />
+    <disable_collisions link1="DRB00051" link2="horn5" reason="Never" />
+    <disable_collisions link1="DRB00051" link2="link1" reason="Never" />
+    <disable_collisions link1="DRB00051" link2="link2" reason="Adjacent" />
+    <disable_collisions link1="DRB00052" link2="DRB00091" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="DRB00092" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="DRB00093" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="gripper-bottom" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="gripper-bottom-cover" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="gripper-left" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="gripper-link1" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="gripper-link1-1" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="gripper-link2" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="horn2" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="horn3" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="horn4" reason="Adjacent" />
+    <disable_collisions link1="DRB00052" link2="horn5" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="horn6" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="horn7" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="link3" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="link4" reason="Never" />
+    <disable_collisions link1="DRB00052" link2="link5" reason="Adjacent" />
+    <disable_collisions link1="DRB00052" link2="link7" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="DRB00092" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="DRB00093" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="horn1" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="horn2" reason="Adjacent" />
+    <disable_collisions link1="DRB00091" link2="horn3" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="horn4" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="horn5" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="link1" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="link3" reason="Adjacent" />
+    <disable_collisions link1="DRB00091" link2="link4" reason="Never" />
+    <disable_collisions link1="DRB00091" link2="link5" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="DRB00093" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="gripper-bottom" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="gripper-bottom-cover" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="gripper-link2" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="horn1" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="horn2" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="horn3" reason="Adjacent" />
+    <disable_collisions link1="DRB00092" link2="horn4" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="horn5" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="horn6" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="horn7" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="link2" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="link4" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="link5" reason="Never" />
+    <disable_collisions link1="DRB00092" link2="link6" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="gripper-bottom" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="gripper-bottom-cover" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="gripper-left" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="gripper-link1" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="gripper-link1-1" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="gripper-link2" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="horn2" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="horn3" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="horn4" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="horn5" reason="Adjacent" />
+    <disable_collisions link1="DRB00093" link2="horn6" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="horn7" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="link3" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="link4" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="link6" reason="Never" />
+    <disable_collisions link1="DRB00093" link2="link7" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="gripper-bottom-cover" reason="Adjacent" />
+    <disable_collisions link1="gripper-bottom" link2="gripper-left" reason="Adjacent" />
+    <disable_collisions link1="gripper-bottom" link2="gripper-link1" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="gripper-link1-1" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="gripper-link2" reason="Adjacent" />
+    <disable_collisions link1="gripper-bottom" link2="gripper-link2-2" reason="Adjacent" />
+    <disable_collisions link1="gripper-bottom" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="horn3" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="horn4" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="horn5" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="horn6" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="horn7" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="link6" reason="Never" />
+    <disable_collisions link1="gripper-bottom" link2="link7" reason="Adjacent" />
+    <disable_collisions link1="gripper-bottom-cover" link2="gripper-left" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="gripper-link1" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="gripper-link1-1" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="gripper-link2" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="horn3" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="horn4" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="horn5" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="horn6" reason="Adjacent" />
+    <disable_collisions link1="gripper-bottom-cover" link2="horn7" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="link3" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper-bottom-cover" link2="link6" reason="Default" />
+    <disable_collisions link1="gripper-bottom-cover" link2="link7" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="gripper-link1" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="gripper-link1-1" reason="Adjacent" />
+    <disable_collisions link1="gripper-left" link2="gripper-link2" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="horn3" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="horn4" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="horn5" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="horn6" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="horn7" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="link6" reason="Never" />
+    <disable_collisions link1="gripper-left" link2="link7" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="gripper-link1-1" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="gripper-link2" reason="Default" />
+    <disable_collisions link1="gripper-link1" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="gripper-right" reason="Adjacent" />
+    <disable_collisions link1="gripper-link1" link2="horn4" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="horn5" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="horn6" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="horn7" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="link4" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="link6" reason="Never" />
+    <disable_collisions link1="gripper-link1" link2="link7" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="gripper-link2" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="gripper-link2-2" reason="Default" />
+    <disable_collisions link1="gripper-link1-1" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="horn4" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="horn5" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="horn6" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="horn7" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="link4" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="link6" reason="Never" />
+    <disable_collisions link1="gripper-link1-1" link2="link7" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="gripper-link2-2" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="horn3" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="horn4" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="horn5" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="horn6" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="horn7" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="link3" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="link4" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="link6" reason="Never" />
+    <disable_collisions link1="gripper-link2" link2="link7" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="gripper-right" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="horn3" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="horn4" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="horn5" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="horn6" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="horn7" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="link3" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="link4" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="link6" reason="Never" />
+    <disable_collisions link1="gripper-link2-2" link2="link7" reason="Never" />
+    <disable_collisions link1="gripper-right" link2="horn4" reason="Never" />
+    <disable_collisions link1="gripper-right" link2="horn5" reason="Never" />
+    <disable_collisions link1="gripper-right" link2="horn6" reason="Never" />
+    <disable_collisions link1="gripper-right" link2="horn7" reason="Adjacent" />
+    <disable_collisions link1="gripper-right" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper-right" link2="link6" reason="Never" />
+    <disable_collisions link1="gripper-right" link2="link7" reason="Never" />
+    <disable_collisions link1="horn1" link2="horn2" reason="Never" />
+    <disable_collisions link1="horn1" link2="horn3" reason="Never" />
+    <disable_collisions link1="horn1" link2="horn5" reason="Never" />
+    <disable_collisions link1="horn1" link2="link1" reason="Adjacent" />
+    <disable_collisions link1="horn1" link2="link2" reason="Never" />
+    <disable_collisions link1="horn1" link2="link3" reason="Never" />
+    <disable_collisions link1="horn2" link2="horn3" reason="Never" />
+    <disable_collisions link1="horn2" link2="horn4" reason="Never" />
+    <disable_collisions link1="horn2" link2="horn5" reason="Never" />
+    <disable_collisions link1="horn2" link2="link1" reason="Never" />
+    <disable_collisions link1="horn2" link2="link2" reason="Adjacent" />
+    <disable_collisions link1="horn2" link2="link3" reason="Never" />
+    <disable_collisions link1="horn2" link2="link4" reason="Never" />
+    <disable_collisions link1="horn2" link2="link5" reason="Never" />
+    <disable_collisions link1="horn3" link2="horn4" reason="Never" />
+    <disable_collisions link1="horn3" link2="horn5" reason="Never" />
+    <disable_collisions link1="horn3" link2="horn6" reason="Never" />
+    <disable_collisions link1="horn3" link2="horn7" reason="Never" />
+    <disable_collisions link1="horn3" link2="link2" reason="Never" />
+    <disable_collisions link1="horn3" link2="link3" reason="Adjacent" />
+    <disable_collisions link1="horn3" link2="link4" reason="Never" />
+    <disable_collisions link1="horn3" link2="link5" reason="Never" />
+    <disable_collisions link1="horn3" link2="link6" reason="Never" />
+    <disable_collisions link1="horn3" link2="link7" reason="Never" />
+    <disable_collisions link1="horn4" link2="horn5" reason="Never" />
+    <disable_collisions link1="horn4" link2="horn6" reason="Never" />
+    <disable_collisions link1="horn4" link2="horn7" reason="Never" />
+    <disable_collisions link1="horn4" link2="link3" reason="Never" />
+    <disable_collisions link1="horn4" link2="link4" reason="Adjacent" />
+    <disable_collisions link1="horn4" link2="link5" reason="Never" />
+    <disable_collisions link1="horn4" link2="link6" reason="Never" />
+    <disable_collisions link1="horn4" link2="link7" reason="Never" />
+    <disable_collisions link1="horn5" link2="horn6" reason="Never" />
+    <disable_collisions link1="horn5" link2="horn7" reason="Never" />
+    <disable_collisions link1="horn5" link2="link2" reason="Never" />
+    <disable_collisions link1="horn5" link2="link3" reason="Never" />
+    <disable_collisions link1="horn5" link2="link4" reason="Never" />
+    <disable_collisions link1="horn5" link2="link5" reason="Adjacent" />
+    <disable_collisions link1="horn5" link2="link6" reason="Never" />
+    <disable_collisions link1="horn5" link2="link7" reason="Never" />
+    <disable_collisions link1="horn6" link2="horn7" reason="Never" />
+    <disable_collisions link1="horn6" link2="link3" reason="Never" />
+    <disable_collisions link1="horn6" link2="link5" reason="Never" />
+    <disable_collisions link1="horn6" link2="link6" reason="Adjacent" />
+    <disable_collisions link1="horn6" link2="link7" reason="Never" />
+    <disable_collisions link1="horn7" link2="link3" reason="Never" />
+    <disable_collisions link1="horn7" link2="link5" reason="Never" />
+    <disable_collisions link1="horn7" link2="link6" reason="Never" />
+    <disable_collisions link1="horn7" link2="link7" reason="Adjacent" />
+    <disable_collisions link1="link1" link2="link2" reason="Never" />
+    <disable_collisions link1="link3" link2="link5" reason="Never" />
+    <disable_collisions link1="link3" link2="link6" reason="Never" />
+    <disable_collisions link1="link4" link2="link5" reason="Never" />
+    <disable_collisions link1="link5" link2="link7" reason="Never" />
+    <disable_collisions link1="link6" link2="link7" reason="Never" />
+</robot>
