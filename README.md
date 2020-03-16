@@ -206,7 +206,8 @@ ROS시스템에서는 실행하고자 하는 ROS Node를 구동하기 위해서�
 예) 14,0,0,0을 입력하면 해당 기능이 비활성화 된다.
 
 
-[HerkuleX ROS Package의 구성]
+===[HerkuleX ROS Package의 구성]====================================
+
 HerkuleX ROS Package는 ‘rosserial’ Package를 이용하여, PC와 HerkuleX간의 Serial통신을 연결합니다. 때문에 종속성 패키지로 rosserial이 준비되어 있어야 합니다. 또한, HerkuleX Package는 Serail통신의 Board rate를 115,200bps로 고정하였기 때문에 PC에 연결된 HerkuleX의 Board rate또한 115,200bps로 설정되어 있어야 합니다. (HerkuleX Package의 Board rate의 변경을 위해서는 Package의 Code수정이 필요함)
  HerkuleX ROS Package의 구성은 아래그림과 같습니다.
 
@@ -252,7 +253,8 @@ HerkuleX ROS Package는 ‘rosserial’ Package를 이용하여, PC와 HerkuleX�
 그림 16. SJOG_cmd Service의 정의.
 
 
-[ROS GUI개발도구(rqt)를 활용한 HerkuleX제어]
+===[ROS GUI개발도구(rqt)를 활용한 HerkuleX제어]====================================
+
 
 
 
