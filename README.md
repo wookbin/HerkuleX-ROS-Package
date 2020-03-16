@@ -1,8 +1,8 @@
 # HerkuleX ROS Package
 * Ubuntu 16.04 _ kinetic ver
 * HerkuleX ROS Package List
-	- HerkuleX (HerkuleX_node, HerkuleX_PanTilt_node, HerkuleX_feedback_Test_node)
-	- HerkuleX_description (HerkuleX_pantilt_Control.launch, HerkuleX_pantilt_display.launch)
+	- HerkuleX (HerkuleX_node, HerkuleX_PanTilt_node, HerkuleX_6DOF_Arm_node, HerkuleX_feedback_Test_node, HerkuleX_12DOF_Robot_node(X))
+	- HerkuleX_description (HerkuleX_Arm_Control_moveit.launch, HerkuleX_Arm_display.launch, HerkuleX_Arm_Manual_Control.launch, HerkuleX_pantilt_Control.launch, HerkuleX_pantilt_display.launch)
 
 ===[Device Setting]====================================
 
