@@ -400,6 +400,6 @@ HerkuleX의 RAM과 EEP Register Map의 내용은 터미널 창에서 rostopic ec
 
 -	Arm의 끝 단에 위치한 작용점 부분을 원하는 위치로 이동 시킨 후 Planning 탭에 있는 Plan and Execute버튼을 클릭하면, Arm이 움직이는 경로에 대한 시뮬레이션과 함께, 실제 Arm이 동작합니다.
 
--	의 구성은 아래그림과 같습니다.
+-	Node 의 구성은 아래그림과 같습니다.
 
 ![13](https://user-images.githubusercontent.com/58063370/76718853-5f8dfa80-677b-11ea-95c5-7a7191edb169.png)
