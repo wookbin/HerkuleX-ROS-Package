@@ -1751,7 +1751,6 @@ bool Herkulex_ErrorClear(unsigned char cID)
 	nPacketLength = set_ram_write_cmd(szSendBuffer, cID, RAM_STATUS_DETAIL, &ucValue);
 	ser.write(szSendBuffer, nPacketLength);
 
-
 	bResult = true;
 	return bResult;
 }
@@ -2175,7 +2174,8 @@ bool Register_Command(HerkuleX::HerkuleX_RegisterCommand::Request  &req,
 	---
 	res.command_Result
 	*/
-	bResult = res.command_Result;
+	bResult = true;
+	res.command_Result = bResult;
 	return bResult;
 }
 
@@ -2201,7 +2201,8 @@ bool Position_Command(HerkuleX::HerkuleX_PositionMove::Request  &req,
 	res.command
 	res.command_Result
 	*/
-	bResult = res.command_Result;
+	bResult = true;
+	res.command_Result = bResult;
 	return bResult;
 }
 
@@ -2225,7 +2226,8 @@ bool Velocity_Command(HerkuleX::HerkuleX_VelocityMove::Request  &req,
 	res.command
 	res.command_Result
 	*/
-	bResult = res.command_Result;
+	bResult = true;
+	res.command_Result = bResult;
 	return bResult;
 }
 
@@ -2258,7 +2260,8 @@ bool SJOG_Command(HerkuleX::HerkuleX_SJOG_Move::Request  &req,
 	string command 
 	bool command_Result
 	*/
-	bResult = res.command_Result;
+	bResult = true;
+	res.command_Result = bResult;
 	return bResult;
 }
 
@@ -2293,7 +2296,8 @@ bool IJOG_Command(HerkuleX::HerkuleX_IJOG_Move::Request  &req,
 	string command 
 	bool command_Result
 	*/
-	bResult = res.command_Result;
+	bResult = true;
+	res.command_Result = bResult;
 	return bResult;
 }
 
@@ -2346,146 +2350,145 @@ void *t_function(void *data)
                 break;
             case 1:
                 Herkulex_Servo_Enable(m_iID, m_iValue);
-				if(m_bView_Flag)
-				{
-					for(int i=0; i<nPacketLength; i++)
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-				}
+		if(m_bView_Flag)
+		{
+			for(int i=0; i<nPacketLength; i++)
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+		}
                 break;
             case 2:
                 Velocity_Move(m_iID, 1, m_iValue, 0);
-				if(m_bView_Flag)
-				{
-					for(int i=0; i<nPacketLength; i++)
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-				}
+		if(m_bView_Flag)
+		{
+			for(int i=0; i<nPacketLength; i++)
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+		}
                 break;
             case 3:
                 Position_Move(m_iID, 1, m_iAddr, m_iValue, 0); //m_iAddr-> PlayTime으로 활용//
-				if(m_bView_Flag)
-				{
-					for(int i=0; i<nPacketLength; i++)
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-				}
+		if(m_bView_Flag)
+		{
+			for(int i=0; i<nPacketLength; i++)
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+		}
                 break;
             case 4:
-				m_iModel = m_iValue; //Model_Num
+		m_iModel = m_iValue; //Model_Num
                 RAM_RegisterData_Read(m_iID, m_iAddr); 
-				if(m_bView_Flag)
-				{
-					w_buffer.data.resize(nPacketLength);
-					for(int i=0; i<nPacketLength; i++)
-					{   
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-						w_buffer.data[i] = szSendBuffer[i];
-					}
-					write_pub.publish(w_buffer);
-				}
+		if(m_bView_Flag)
+		{
+			w_buffer.data.resize(nPacketLength);
+			for(int i=0; i<nPacketLength; i++)
+			{   
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+				w_buffer.data[i] = szSendBuffer[i];
+			}
+			write_pub.publish(w_buffer);
+		}
                 break;
-			case 5:
-				m_iModel = m_iValue; //Model_Num
-				EEP_RegisterData_Read(m_iID, m_iAddr); 
-				if(m_bView_Flag)
-				{
-					w_buffer.data.resize(nPacketLength);
-					for(int i=0; i<nPacketLength; i++)
-					{   
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-						w_buffer.data[i] = szSendBuffer[i];
-					}
-					write_pub.publish(w_buffer);
-				}
+	    case 5:
+		m_iModel = m_iValue; //Model_Num
+		EEP_RegisterData_Read(m_iID, m_iAddr); 
+		if(m_bView_Flag)
+		{
+			w_buffer.data.resize(nPacketLength);
+			for(int i=0; i<nPacketLength; i++)
+			{   
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+				w_buffer.data[i] = szSendBuffer[i];
+			}
+			write_pub.publish(w_buffer);
+		}
                 break;
-			case 6:
-				RAM_RegisterData_Write(m_iID, m_iAddr, m_iValue);
-				if(m_bView_Flag)
-				{
-					w_buffer.data.resize(nPacketLength);
-					for(int i=0; i<nPacketLength; i++)
-					{   
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-						w_buffer.data[i] = szSendBuffer[i];
-					}
-					write_pub.publish(w_buffer);
-				}
-				break;
-			case 7:
-				EEP_RegisterData_Write(m_iID, m_iAddr, m_iValue);
-				if(m_bView_Flag)
-				{
-					w_buffer.data.resize(nPacketLength);
-					for(int i=0; i<nPacketLength; i++)
-					{   
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-						w_buffer.data[i] = szSendBuffer[i];
-					}
-					write_pub.publish(w_buffer);
-				}
-				break;
-			case 8:
-				m_iModel = m_iValue; //Model_Num
-				m_bRAM_ReadAll_Flag = true;
-				RAM_RegisterData_Read_ALL(m_iID, 0, RAM_LAST); 
+	    case 6:
+		RAM_RegisterData_Write(m_iID, m_iAddr, m_iValue);
+		if(m_bView_Flag)
+		{
+			w_buffer.data.resize(nPacketLength);
+			for(int i=0; i<nPacketLength; i++)
+			{   
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+				w_buffer.data[i] = szSendBuffer[i];
+			}
+			write_pub.publish(w_buffer);
+		}
+		break;
+	    case 7:
+		EEP_RegisterData_Write(m_iID, m_iAddr, m_iValue);
+		if(m_bView_Flag)
+		{
+			w_buffer.data.resize(nPacketLength);
+			for(int i=0; i<nPacketLength; i++)
+			{   
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+				w_buffer.data[i] = szSendBuffer[i];
+			}
+			write_pub.publish(w_buffer);
+		}
+		break;
+	   case 8:
+		m_iModel = m_iValue; //Model_Num
+		m_bRAM_ReadAll_Flag = true;
+		RAM_RegisterData_Read_ALL(m_iID, 0, RAM_LAST); 
 
-				break;
-			case 9:
-				m_iModel = m_iValue; //Model_Num
-				m_bEEP_ReadAll_Flag = true;
-				EEP_RegisterData_Read_ALL(m_iID, 0, EEP_LAST); 
-
-				break;
-			case 10:
-				Reboot(m_iID);
-				if(m_bView_Flag)
-				{
-					w_buffer.data.resize(nPacketLength);
-					for(int i=0; i<nPacketLength; i++)
-					{   
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-						w_buffer.data[i] = szSendBuffer[i];
-					}
-					write_pub.publish(w_buffer);
-				}
-				break;
-			case 11:
-				FactoryReset(m_iID, 1, 1);
-				if(m_bView_Flag)
-				{
-					w_buffer.data.resize(nPacketLength);
-					for(int i=0; i<nPacketLength; i++)
-					{   
-						ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
-						w_buffer.data[i] = szSendBuffer[i];
-					}
-					write_pub.publish(w_buffer);
-				}
-				break;
-			case 12:
-				HerkuleX_IDscan(253);
-				usleep(30000);
-				for(int i=0; i<253; i++)
-				{
-					HerkuleX_IDscan(i+1);
-					usleep(30000);
-					printf("[Check_%d]: ID = %d \n",i+1, EEP[i+1].ucID);
-					printf("[Check_%d]: Model = DRS-0%d0%d \n",i+1, EEP[i+1].ucModelNo1, EEP[i+1].ucModelNo2);
-					if(EEP[i+1].ucID != 0)
-					{
-						m_iTotal_Axis++;
-					}
-				}
-				printf("###[Total Axis]: %d ###\n",m_iTotal_Axis);
-				m_iTotal_Axis = 0; //Reset count//
-				break;
-			case 13:
-				m_bView_Flag = true;
-				break;
-			case 14:
-				m_bView_Flag = false;
-				break;
-            default:
-				printf("[Error]: Not defined Command... \n");
-                break;
+		break;
+	   case 9:
+		m_iModel = m_iValue; //Model_Num
+		m_bEEP_ReadAll_Flag = true;
+		EEP_RegisterData_Read_ALL(m_iID, 0, EEP_LAST); 
+		break;
+	   case 10:
+		Reboot(m_iID);
+		if(m_bView_Flag)
+		{
+			w_buffer.data.resize(nPacketLength);
+			for(int i=0; i<nPacketLength; i++)
+			{   
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+				w_buffer.data[i] = szSendBuffer[i];
+			}
+			write_pub.publish(w_buffer);
+		}
+		break;
+	   case 11:
+		FactoryReset(m_iID, 1, 1);
+		if(m_bView_Flag)
+		{
+			w_buffer.data.resize(nPacketLength);
+			for(int i=0; i<nPacketLength; i++)
+			{   
+				ROS_INFO("Send_Packet[%d]:  %02x\n",i, szSendBuffer[i]);
+				w_buffer.data[i] = szSendBuffer[i];
+			}
+			write_pub.publish(w_buffer);
+		}
+		break;
+	   case 12:
+		HerkuleX_IDscan(253);
+		usleep(30000);
+		for(int i=0; i<253; i++)
+		{
+			HerkuleX_IDscan(i+1);
+			usleep(30000);
+			printf("[Check_%d]: ID = %d \n",i+1, EEP[i+1].ucID);
+			printf("[Check_%d]: Model = DRS-0%d0%d \n",i+1, EEP[i+1].ucModelNo1, EEP[i+1].ucModelNo2);
+			if(EEP[i+1].ucID != 0)
+			{
+				m_iTotal_Axis++;
+			}
+		}
+		printf("###[Total Axis]: %d ###\n",m_iTotal_Axis);
+		m_iTotal_Axis = 0; //Reset count//
+		break;
+	   case 13:
+		m_bView_Flag = true;
+		break;
+	   case 14:
+		m_bView_Flag = false;
+		break;
+	   default:
+		printf("[Error]: Not defined Command... \n");
+		break;
         }
         usleep(100);
     }
@@ -2496,8 +2499,8 @@ void *t_function(void *data)
 //int main (int argc, char** argv)
 int main (int argc, char* argv[])
 {
-    ros::init(argc, argv, "HerkuleX_node");
-    ros::NodeHandle nh;
+    	ros::init(argc, argv, "HerkuleX_node");
+        ros::NodeHandle nh;
 	ros::NodeHandle wh;
 	//ros::NodeHandle rh;
 	//ros::NodeHandle eh;
@@ -2514,7 +2517,7 @@ int main (int argc, char* argv[])
 	ROS_INFO("Connected HerkuleX Total_Axis: %d", m_iTotal_Axis);
 	
 	//Serial-Publish
-    read_pub = nh.advertise<std_msgs::UInt8MultiArray>("read", 1000);
+        read_pub = nh.advertise<std_msgs::UInt8MultiArray>("read", 1000);
 	write_pub = wh.advertise<std_msgs::UInt8MultiArray>("write", 1000);
 
 	/***************************************************************************************/
@@ -2591,7 +2594,7 @@ int main (int argc, char* argv[])
     if(ser.isOpen())
     {
         ROS_INFO_STREAM("Serial Port initialized");
-		ROS_INFO_STREAM("HerkuleX Node Start !");
+	ROS_INFO_STREAM("HerkuleX Node Start !");
     }
     else
     {
@@ -2609,30 +2612,29 @@ int main (int argc, char* argv[])
         ros::spinOnce();
         if(ser.available())
         {
-			std_msgs::UInt8MultiArray  serial_data;
-			m_idata_size = ser.available();
+	    std_msgs::UInt8MultiArray  serial_data;
+	    m_idata_size = ser.available();
             ser.read (serial_data.data, m_idata_size);
 			if(m_bView_Flag)
-            	ROS_INFO("serial data size: %d ", m_idata_size);
+            ROS_INFO("serial data size: %d ", m_idata_size);
 
             r_buffer.data.resize(m_idata_size);
             for(int i=0; i<m_idata_size; i++)
             {
-				r_buffer.data[i] = serial_data.data[i];
-				if(m_bView_Flag)
-					ROS_INFO("Read[%d]: %02x", i, r_buffer.data[i]);
+		r_buffer.data[i] = serial_data.data[i];
+		if(m_bView_Flag)
+			ROS_INFO("Read[%d]: %02x", i, r_buffer.data[i]);
 
             }
 
-			int pos = 0;
-			unsigned char* buffer = new unsigned char[m_idata_size];
-			std::copy(r_buffer.data.begin(), r_buffer.data.end(), buffer);
-			parse(buffer, m_idata_size, &pos);
+		int pos = 0;
+		unsigned char* buffer = new unsigned char[m_idata_size];
+		std::copy(r_buffer.data.begin(), r_buffer.data.end(), buffer);
+		parse(buffer, m_idata_size, &pos);
 
-			delete[ ] buffer;
+		delete[ ] buffer;
 
-			read_pub.publish(r_buffer);
-           
+		read_pub.publish(r_buffer);
         }
 
         loop_rate.sleep();
